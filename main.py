@@ -3,6 +3,8 @@
 # Password validation program
 # Mikey Herbert 08feb19 - 11feb19
 # Includes visual UI
+# (and object oriented programming because I can)
+# Does not include validation because I'd rather write 183 lines not 6000
 #
 ###############
 
