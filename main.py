@@ -8,6 +8,7 @@
 
 import tkinter as tk
 from tkinter import simpledialog
+import time as t
 
 
 class App1(tk.Frame):
@@ -55,7 +56,7 @@ class App1(tk.Frame):
             if username == group[0] and password == group[1]:
                 success = True
             else:
-                success = Fase
+                success = False
 
         if success:
             successw = tk.Tk()
@@ -63,6 +64,8 @@ class App1(tk.Frame):
             successtxt['text'] = 'Success!'
             successtxt.pack()
             successw.mainloop()
+            t.sleep(2)
+            quit()
 
         else:
             failw = tk.Tk()
@@ -70,13 +73,79 @@ class App1(tk.Frame):
             failtxt['text'] = 'Fail... '
             failtxt.pack()
             failw.mainloop()
-
+            t.sleep(2)
+            quit()
 
     def register(self):
-        user = ''
+
+        reg_w = tk.Tk()
+
+        def sub_register():
+            reg_w.withdraw()
+            email = email_r.get()
+            username = user_r.get()
+            password = password_r.get()
+            confirm = confirm_r.get()
+            pin = pin_r.get()
+
+            if not password == confirm:
+                failw = tk.Tk()
+                failtxt = tk.Label(failw)
+                failtxt['text'] = 'Fail... '
+                failtxt.pack()
+                failw.mainloop()
+                t.sleep(2)
+                quit()
+
+            else:
+                file = open('users.txt', 'a')
+                to_add = '{}:{}:{}:{}'.format(username, password, email, pin)
+                file.write(to_add)
+                successw = tk.Tk()
+                successtxt = tk.Label(successw)
+                successtxt['text'] = 'Success!'
+                successtxt.pack()
+                successw.mainloop()
+                t.sleep(2)
+                quit()
+
+        email_t = tk.Label(reg_w, text='Email:')
+        email_t.pack()
+
+        email_r = tk.Entry(reg_w)
+        email_r.pack()
+
+        user_t = tk.Label(reg_w, text='Username:')
+        user_t.pack()
+
+        user_r = tk.Entry(reg_w)
+        user_r.pack()
+
+        password_t = tk.Label(reg_w, text='Password:')
+        password_t.pack()
+
+        password_r = tk.Entry(reg_w, show='•')
+        password_r.pack()
+
+        confirm_t = tk.Label(reg_w, text='Confirm password:')
+        confirm_t.pack()
+
+        confirm_r = tk.Entry(reg_w, show='•')
+        confirm_r.pack()
+
+        pin_t = tk.Label(reg_w, text='Emergency PIN:')
+        pin_t.pack()
+
+        pin_r = tk.Entry(reg_w, show='•')
+        pin_r.pack()
+
+        enter = tk.Button(reg_w, command=lambda: sub_register(), text='Enter')
+        enter.pack()
+
+        reg_w.mainloop()
 
     def recover(self):
-        user = ''
+        placeholder = 0
 
 
 root = tk.Tk()
