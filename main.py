@@ -98,9 +98,10 @@ class App1(tk.Frame):
                 quit()
 
             else:
-                file = open('users.txt', 'a')
-                to_add = '{}:{}:{}:{}'.format(username, password, email, pin)
-                file.write(to_add)
+                with open('users.txt', 'a') as file:
+                    to_add = '{}:{}:{}:{}\n'.format(username, password, pin, email)
+                    file.write(to_add)
+
                 successw = tk.Tk()
                 successtxt = tk.Label(successw)
                 successtxt['text'] = 'Success!'
@@ -145,7 +146,32 @@ class App1(tk.Frame):
         reg_w.mainloop()
 
     def recover(self):
-        placeholder = 0
+        newroot = tk.Tk()
+
+        username = tk.simpledialog.askstring('Username', 'Username:')
+        pin = tk.simpledialog.askstring('PIN', 'PIN:', show='•')
+
+        with open('users.txt', 'r') as file:
+            for l in file:
+                gp = l.split(':')
+                found = False
+                if pin in gp[3] and username in gp[0]:
+                    pass_display = tk.Label(newroot, text='Password: {}'.format(gp[1]))
+                    pass_display.pack()
+                    found = True
+                else:
+                    pass
+
+            if not found:
+                failw = tk.Tk()
+                failtxt = tk.Label(failw)
+                failtxt['text'] = 'Fail... '
+                failtxt.pack()
+                failw.mainloop()
+                t.sleep(2)
+                quit()
+
+        newroot.mainloop()
 
 
 root = tk.Tk()
