@@ -13,6 +13,14 @@ from tkinter import simpledialog
 import time as t
 
 
+def encode(non_cipher, key):
+    cipher = ''
+    for c in non_cipher:
+        c = chr(ord(c) + (key + 3))  # key will be length of string + 3
+        cipher += c
+
+    return cipher
+
 class App1(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
@@ -23,6 +31,7 @@ class App1(tk.Frame):
         self.op3 = tk.Button(self, command=lambda: self.recover())
         self.grid()
         self.create_widgets()
+
 
     def create_widgets(self):
         self.intro['text'] = 'Choose appropriate option: \n' \
@@ -55,7 +64,7 @@ class App1(tk.Frame):
 
         for l in userlist:
             group = l.split(':')
-            if username == group[0] and password == group[1]:
+            if username == group[0] and password == decode(group[1]):
                 success = True
             else:
                 success = False
@@ -86,8 +95,8 @@ class App1(tk.Frame):
             reg_w.withdraw()
             email = email_r.get()
             username = user_r.get()
-            password = password_r.get()
-            confirm = confirm_r.get()
+            password = encode(password_r.get(), len(password_r.get()))
+            confirm = encode(confirm_r.get(), len(confirm_r.get()))
             pin = pin_r.get()
 
             if not password == confirm:
@@ -154,11 +163,11 @@ class App1(tk.Frame):
         pin = tk.simpledialog.askstring('PIN', 'PIN:', show='•')
 
         with open('users.txt', 'r') as file:
+            found = False
             for l in file:
                 gp = l.split(':')
-                found = False
                 if pin in gp[3] and username in gp[0]:
-                    pass_display = tk.Label(newroot, text='Password: {}'.format(gp[1]))
+                    pass_display = tk.Label(newroot, text='Password: {}'.format(decode(gp[1])))
                     pass_display.pack()
                     found = True
                 else:
