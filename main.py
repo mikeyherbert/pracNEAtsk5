@@ -21,6 +21,14 @@ def encode(non_cipher, key):
 
     return cipher
 
+def decode(cipher):
+    decipher = ''
+    for c in cipher:
+        c = chr(ord(c) - (len(cipher) + 3))
+        decipher += c
+        
+    return decipher
+
 class App1(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
