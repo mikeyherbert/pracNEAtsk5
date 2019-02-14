@@ -44,7 +44,7 @@ It is hard to show objects in a flowchart, so I will outline my thought processe
 ## Stage 3: Code:
 **Code is in the repository**
 
-##Stage 4: Testing:
+## Stage 4: Testing:
 
 * I tested each of the functions with these tests:
     * login:
